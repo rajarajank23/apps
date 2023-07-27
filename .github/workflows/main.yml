@@ -16,7 +16,7 @@ jobs:
       
       - name: Deploy WordPress
         run: |
-          git clone https://github.com/rajarajank23/apps.git /var/www/html
+          git clone https://github.com/rajarajank23/apps.git
           cd /var/www/html
           sudo chown -R www-data:www-data
           sudo service apache2 restart
