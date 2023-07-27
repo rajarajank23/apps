@@ -1,19 +1,1 @@
-name: Deploy to EC2
 
-on:
-push:
-branches:
-- main
-
-jobs:
-deploy:
-runs-on: ubuntu-latest
-
-steps:
-- name: 
-    -Checkout code
-uses: actions/checkout@v2
-
-- name: Copy WordPress setup files to EC2
-run: scp -r /home/ubuntu/wordpress*/ ubuntu@13.234.76.98:/var/www/html
-has context menu
