@@ -1,26 +1,33 @@
-name: Push WordPress Setup File
+name: WordPress Deployment
 
 on:
 push:
 branches:
-- main # Adjust this to match your main branch name
+- main
 
 jobs:
-push_wp_setup:
+deploy:
 runs-on: ubuntu-latest
 
 steps:
 - name: Checkout code
 uses: actions/checkout@v2
 
-- name: Copy WordPress setup file
-run: |
-cp path/to/your/wp-config.php . # Adjust the file path as necessary
+- name: Set up SSH
+uses: webfactory/ssh-agent@v0.5.0
+with:
+ssh-private-key: ${{ secrets.github }}
 
-- name: Commit and push
+- name: Install dependencies
 run: |
-git config --local user.email "rajarajank23@gmail.com"
-git config --local user.name "rajarajank23"
-git add wp-config.php
-git commit -m "Add WordPress setup file"
-git push
+# Add any commands to install dependencies here
+
+- name: Transfer files to EC2 instance
+run: |
+# Add commands to transfer files to your EC2 instance using SSH
+# For example: scp -r /home/ubuntu/wordpress*/ ubuntu@13.234.76.98:/var/www/html
+
+- name: Deploy WordPress
+run: |
+# Add any deployment scripts or commands here
+has context menu
