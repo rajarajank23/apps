@@ -1,1 +1,23 @@
+name: Deploy WordPress
+on:
+  push:
+    branches:
+      - main
 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y php8.1 
+		run: sudo apt-get update && apt-get install -y apache2
+
+      - name: Deploy WordPress
+        run: |
+          git clone https://github.com/rajarajank23/apps.git /var/www/html
+          cd /var/www/html
+          sudo chown -R www-data:www-data .
+          sudo service apache2 restart
