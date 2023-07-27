@@ -14,8 +14,6 @@ steps:
     -Checkout code
 uses: actions/checkout@v2
 
-- name: 
-   -Install SSH key
 run: |
 mkdir -p ~/.ssh
 echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
