@@ -1,69 +1,33 @@
-name: Build The Theme & Deploy
+name: WordPress Deployment
 
 on:
 push:
-  branches: [main]
-  pull_request:
-  branches: [main]
-defaults:
-  run:
-    working-directory: themes/my-theme
+branches:
+- main
+
 jobs:
-  run-github-action:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: ADD NODE JS v12.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: "12.x"
-      - name: ADD PHP v 7.4.x
-        uses: rajarajan/setup-php@v2
-        with:
-          php-version: "7.4"
-          tools: composer:v2
-      - name: RUN NPM
-        run: npm ci
-      - name: RUN COMPOSER
-        run: composer install
-      - name: BUILD THEME
-        run: npm run prod
-      - name: Before Deployment
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.13.234.76.98 }}
-          username: ${{ secrets.ubuntu }}
-          key: ${{ secrets.github }}
-          port: ${{ secrets.22 }}
-          script: |
-            sudo rm -rf /var/www/html/wp/wp-content/themes/my-theme/*
-            sudo chown -R ubuntu /var/www/html/wp/wp-content/themes/
-      - name: Deploy to AWS Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.github }}
-          REMOTE_HOST: ${{ secrets.13.234.76.98 }}
-          REMOTE_USER: ${{ secrets.ubuntu }}
-          SOURCE: "themes/my-theme/"
-          TARGET: "/var/www/html/wp/wp-content/themes/my-theme/"
-          EXCLUDE: "/node_modules/"
-      - name: After Deployment
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.13.234.76.98 }}
-          username: ${{ secrets.ubuntu }}
-          key: ${{ secrets.github }}
-          port: ${{ secrets.22 }}
-          script: |
-            sudo chown -R www-data:www-data /var/www/html/wp/wp-content/themes/
+deploy:
+runs-on: ubuntu-latest
+
+steps:
+- name: Checkout code
+uses: actions/checkout@v2
+
+- name: Set up SSH
+uses: webfactory/ssh-agent@v0.5.0
+with:
+ssh-private-key: ${{ secrets.github }}
+
+- name: Install dependencies
+run: |
+# Add any commands to install dependencies here
+
+- name: Transfer files to EC2 instance
+run: |
+# Add commands to transfer files to your EC2 instance using SSH
+# For example: scp -r /home/ubuntu/wordpress*/ ubuntu@y13.234.76.98:/var/www/html
+
+- name: Deploy WordPress
+run: |
+# Add any deployment scripts or commands here
+has context menu
