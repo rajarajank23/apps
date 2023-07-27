@@ -1,4 +1,4 @@
-name: WordPress Deployment
+name: Deploy to EC2
 
 on:
 push:
@@ -13,21 +13,13 @@ steps:
 - name: Checkout code
 uses: actions/checkout@v2
 
-- name: Set up SSH
-uses: webfactory/ssh-agent@v0.5.0
-with:
-ssh-private-key: ${{ secrets.github }}
-
-- name: Install dependencies
+- name: Install SSH key
 run: |
-# Add any commands to install dependencies here
+mkdir -p ~/.ssh
+echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
+ssh-keyscan -H 13.234.76.98 >> ~/.ssh/known_hosts
 
-- name: Transfer files to EC2 instance
-run: |
-# Add commands to transfer files to your EC2 instance using SSH
-# For example: scp -r /home/ubuntu/wordpress*/ ubuntu@y13.234.76.98:/var/www/html
-
-- name: Deploy WordPress
-run: |
-# Add any deployment scripts or commands here
+- name: Copy WordPress setup files to EC2
+run: scp -r /home/ubuntu/wordpress*/ ubuntu@13.234.76.98:/var/www/html
 has context menu
