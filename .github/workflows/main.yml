@@ -5,11 +5,9 @@ push:
   branches: [main]
   pull_request:
   branches: [main]
-
 defaults:
   run:
     working-directory: themes/my-theme
-
 jobs:
   run-github-action:
     runs-on: ubuntu-latest
