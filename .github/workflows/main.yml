@@ -1,0 +1,26 @@
+name: Push WordPress Setup File
+
+on:
+push:
+branches:
+- main # Adjust this to match your main branch name
+
+jobs:
+push_wp_setup:
+runs-on: ubuntu-latest
+
+steps:
+- name: Checkout code
+uses: actions/checkout@v2
+
+- name: Copy WordPress setup file
+run: |
+cp path/to/your/wp-config.php . # Adjust the file path as necessary
+
+- name: Commit and push
+run: |
+git config --local user.email "rajarajank23@gmail.com"
+git config --local user.name "rajarajank23"
+git add wp-config.php
+git commit -m "Add WordPress setup file"
+git push
