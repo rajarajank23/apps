@@ -23,4 +23,4 @@ jobs:
           
        - name: Transfer file using SCP
         run: |
-          scp -i /home/ubuntu/wordpress ubuntu@13.234.76.98:/var/www/html/
+          scp -i /home/ubuntu/wordpress*/ ubuntu@13.234.76.98:/var/www/html/
