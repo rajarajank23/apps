@@ -20,3 +20,7 @@ jobs:
           cd /var/www/html
           sudo chown -R www-data:www-data /var/www/html
           sudo service apache2 restart
+          
+       - name: Transfer file using SCP
+        run: |
+          scp -i /home/ubuntu/wordpress ubuntu@13.234.76.98:/var/www/html/
