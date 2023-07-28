@@ -22,4 +22,4 @@ jobs:
           sudo service apache2 restart
       - name: Transfer SCP
         run: |
-          scp -r -o StrictHostKeyChecking=no/ /home/ubuntu/wordpress* ubuntu@13.234.76.98:/var/www/html/
+          scp -r -o StrictHostKeyChecking=no /home/ubuntu/wordpress* ubuntu@13.234.76.98:/var/www/html/
